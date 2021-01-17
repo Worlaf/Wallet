@@ -24,5 +24,6 @@ d. Получить состояние своего кошелька (сумму
 самостоятельно, описав в сопроводительном документе
 
 # Запуск:
-Для запуска необходим MS Sql Server, строка подключения задается в appsettings.json (https://github.com/Worlaf/Wallet/blob/master/Wallet.API/appsettings.Development.json#L10)
+Для запуска необходим MS Sql Server, строка подключения задается в appsettings.json (https://github.com/Worlaf/Wallet/blob/master/Wallet.API/appsettings.Development.json#L10).
+
 При запуске приложения создается база данных с пустыми таблицами, для создания контента можно использовать непосредственно Api (для удобства добавлен SwaggerGen).
