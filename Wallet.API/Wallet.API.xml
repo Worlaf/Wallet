@@ -4,5 +4,81 @@
         <name>Wallet.API</name>
     </assembly>
     <members>
+        <member name="M:Wallet.API.Controllers.WalletController.GetWallet(System.Int32)">
+            <summary>
+            Получить счета пользователя для различных валют
+            </summary>
+            <param name="userId">Числовой идентификатор пользователя</param>
+            <returns></returns>
+        </member>
+        <member name="M:Wallet.API.Controllers.WalletController.CreateWallet(System.Int32)">
+            <summary>
+            Создать кошелек со счетами для всех поддерживаемых валют
+            </summary>
+            <param name="userId">Произвольный числовой идентификатор пользователя</param>
+            <returns></returns>
+        </member>
+        <member name="M:Wallet.API.Controllers.WalletController.WithdrawMoney(System.Int32,System.String,Wallet.API.Models.Wallet.WithdrawMoneyRequestModel)">
+            <summary>
+            Снять деньги со счёта
+            </summary>
+            <param name="userId">Числовой идентификатор пользователя</param>
+            <param name="sourceCurrencyCode">Код валюты - со счета, привязанного к этой валюте будут сняты деньги</param>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Wallet.API.Controllers.WalletController.ConvertMoney(System.Int32,System.String,Wallet.API.Models.Wallet.ConvertMoneyRequestModel)">
+            <summary>
+            Перевести деньги из одной валюты в другую
+            </summary>
+            <param name="userId">Числовой идентификатор пользователя</param>
+            <param name="sourceCurrencyCode">Код валюты - со счета, привязанного к этой валюте будут сняты деньги</param>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Wallet.API.Controllers.WalletController.DepositMoney(System.Int32,System.String,Wallet.API.Models.Wallet.DepositMoneyRequestModel)">
+            <summary>
+            Пополнить счёт
+            </summary>
+            <param name="userId">Числовой идентификатор пользователя</param>
+            <param name="sourceCurrencyCode">Код валюты - на счёт, привязанный к этой валюте будут переведены деньги</param>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Wallet.API.Models.Wallet.ConvertMoneyRequestModel.DestinationCurrencyCode">
+            <summary>
+            Код валюты - на счёт, привязанный к этой валюте будут переведены деньги
+            </summary>
+        </member>
+        <member name="P:Wallet.API.Models.Wallet.ConvertMoneyRequestModel.SourceCurrencyAmount">
+            <summary>
+            Сумма в исходной валюте
+            </summary>
+        </member>
+        <member name="P:Wallet.API.Models.Wallet.DepositMoneyRequestModel.Amount">
+            <summary>
+            Сумма в валюте целевого счёта
+            </summary>
+        </member>
+        <member name="P:Wallet.API.Models.Wallet.GetWalletResponseModel.CurrencyAccounts">
+            <summary>
+            Счета для различных валют
+            </summary>
+        </member>
+        <member name="P:Wallet.API.Models.Wallet.CurrencyAccountModel.CurrencyCode">
+            <summary>
+            Валюта счёта
+            </summary>
+        </member>
+        <member name="P:Wallet.API.Models.Wallet.CurrencyAccountModel.Balance">
+            <summary>
+            Баланс
+            </summary>
+        </member>
+        <member name="P:Wallet.API.Models.Wallet.WithdrawMoneyRequestModel.Amount">
+            <summary>
+            Сумма в валюте целевого счета
+            </summary>
+        </member>
     </members>
 </doc>

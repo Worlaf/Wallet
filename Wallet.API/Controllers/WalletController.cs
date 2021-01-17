@@ -26,6 +26,11 @@ namespace Wallet.API.Controllers
             _walletRepository = walletRepository;
         }
 
+        /// <summary>
+        /// Получить счета пользователя для различных валют
+        /// </summary>
+        /// <param name="userId">Числовой идентификатор пользователя</param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<GetWalletResponseModel>> GetWallet(int userId)
         {
@@ -40,6 +45,11 @@ namespace Wallet.API.Controllers
             return Ok(wallet);
         }
 
+        /// <summary>
+        /// Создать кошелек со счетами для всех поддерживаемых валют
+        /// </summary>
+        /// <param name="userId">Произвольный числовой идентификатор пользователя</param>
+        /// <returns></returns>
         [HttpPost("create")]
         public async Task<ActionResult> CreateWallet(int userId)
         {
@@ -48,6 +58,13 @@ namespace Wallet.API.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Снять деньги со счёта
+        /// </summary>
+        /// <param name="userId">Числовой идентификатор пользователя</param>
+        /// <param name="sourceCurrencyCode">Код валюты - со счета, привязанного к этой валюте будут сняты деньги</param>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost("{sourceCurrencyCode}/withdraw")]
         public async Task<ActionResult> WithdrawMoney(int userId, string sourceCurrencyCode, WithdrawMoneyRequestModel model)
         {
@@ -60,6 +77,13 @@ namespace Wallet.API.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Перевести деньги из одной валюты в другую
+        /// </summary>
+        /// <param name="userId">Числовой идентификатор пользователя</param>
+        /// <param name="sourceCurrencyCode">Код валюты - со счета, привязанного к этой валюте будут сняты деньги</param>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost("{sourceCurrencyCode}/convert")]
         public async Task<ActionResult> ConvertMoney(int userId, string sourceCurrencyCode, ConvertMoneyRequestModel model)
         {
@@ -67,15 +91,22 @@ namespace Wallet.API.Controllers
             if (sourceAccount == null)
                 return NotFound($"Не существует '{sourceCurrencyCode}' счёта для пользователя {userId}.");
 
-            var destinationAccount = await _currencyAccountRepository.SingleOrDefaultAsync(ca => ca.CurrencyCode == model.DestinationCurrency && ca.Wallet.UserId == userId, ca => new {ca.Id});
+            var destinationAccount = await _currencyAccountRepository.SingleOrDefaultAsync(ca => ca.CurrencyCode == model.DestinationCurrencyCode && ca.Wallet.UserId == userId, ca => new {ca.Id});
             if (destinationAccount == null)
-                return NotFound($"Не существует '{model.DestinationCurrency}' счёта для пользователя {userId}.");
+                return NotFound($"Не существует '{model.DestinationCurrencyCode}' счёта для пользователя {userId}.");
 
             await _mediator.Send(new ConvertMoneyRequest(userId, model.SourceCurrencyAmount, sourceAccount.Id, destinationAccount.Id));
 
             return NoContent();
         }
 
+        /// <summary>
+        /// Пополнить счёт
+        /// </summary>
+        /// <param name="userId">Числовой идентификатор пользователя</param>
+        /// <param name="sourceCurrencyCode">Код валюты - на счёт, привязанный к этой валюте будут переведены деньги</param>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost("{sourceCurrencyCode}/deposit")]
         public async Task<ActionResult> DepositMoney(int userId, string sourceCurrencyCode, DepositMoneyRequestModel model)
         {

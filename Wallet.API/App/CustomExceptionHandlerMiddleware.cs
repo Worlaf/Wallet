@@ -35,7 +35,7 @@ namespace Wallet.API.App
             }
             catch (BusinessException ex)
             {
-                await context.ExecuteResultAsync(new BadRequestObjectResult(new {Message = ex.Message}));
+                await context.ExecuteResultAsync(new BadRequestObjectResult(new {ex.Message}));
             }
         }
     }

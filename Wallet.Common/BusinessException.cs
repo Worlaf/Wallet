@@ -8,7 +8,6 @@ namespace Wallet.Common
     {
         public BusinessException(string message) : base(message)
         {
-
         }
     }
 }
